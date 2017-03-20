@@ -5,12 +5,11 @@
  */
 package bookingmanager;
 
-import javafx.geometry.HPos;
-import javafx.geometry.VPos;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.*;
 
 /**
@@ -26,6 +25,7 @@ public class MenuManager
     private Menu currentMenu;
     private Scene menuScene;
     private BorderPane mainPane;
+    private HBox header;
     
     //Menus
     private LoginMenu loginMenu;
@@ -56,12 +56,22 @@ public class MenuManager
     private void initHeader()
     {
         //This is where I will add the header info.
+        header = new HBox();
+        header.setId("header");
+        header.setAlignment(Pos.CENTER);
+        Label heading = new Label("Appointment Booking System");
+        heading.setId("heading");
+        header.getChildren().add(heading);
+        mainPane.setTop(header);
     }
     
     private void initStage()
     {
         primaryStage.setTitle("Appointment Booking System");
-        primaryStage.setScene(new Scene(mainPane, windowWidth, windowHeight));
+        menuScene = new Scene(mainPane, windowWidth, windowHeight);
+        menuScene.getStylesheets().add(getClass().getResource("stylesheet.css").toString());
+        primaryStage.setScene(menuScene);
+        menuScene.setRoot(mainPane);
         primaryStage.show();
     }
     
@@ -70,6 +80,7 @@ public class MenuManager
         a_newMenu.onEntry();
         currentMenu.onExit();
         currentMenu = a_newMenu;
+        
         mainPane.setCenter(currentMenu.getPane());
     }
 }

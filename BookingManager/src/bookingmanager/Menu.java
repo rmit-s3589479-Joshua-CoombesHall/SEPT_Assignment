@@ -25,6 +25,7 @@ public abstract class Menu
         manager = a_manager;
         rootPane = new GridPane();
         rootPane.setAlignment(Pos.CENTER);
+        rootPane.setId("background");
     }
     
     //Called when we first create the menu.
