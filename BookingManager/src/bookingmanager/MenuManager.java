@@ -29,6 +29,7 @@ public class MenuManager
     
     //Menus
     private LoginMenu loginMenu;
+    
     MenuManager(ApplicationDriver a_driver, Stage a_primaryStage)
     {
         driver = a_driver;
@@ -38,6 +39,11 @@ public class MenuManager
         initMainPane();
         initStage();
         
+    }
+    
+    public ApplicationDriver getDriver()
+    {
+        return driver;
     }
     
     private void initMainPane()

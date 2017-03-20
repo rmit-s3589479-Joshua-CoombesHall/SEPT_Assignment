@@ -5,6 +5,8 @@
  */
 package bookingmanager;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -17,6 +19,8 @@ import javafx.scene.text.Text;
  */
 public class LoginMenu extends Menu
 {
+    private TextField emailField;
+    private TextField passwordField;
     
     LoginMenu(MenuManager a_manager)
     {
@@ -36,12 +40,26 @@ public class LoginMenu extends Menu
         getPane().add(emailLabel, 0, 1);
         Text passwordLabel = new Text("Password:");
         getPane().add(passwordLabel, 0, 2);
-        TextField emailField = new TextField();
+        emailField = new TextField();
         getPane().add(emailField, 1, 1);
-        PasswordField passwordField = new PasswordField();
+        passwordField = new PasswordField();
         getPane().add(passwordField, 1, 2);
         Button loginButton = new Button("Login");
         getPane().add(loginButton, 1, 3);
+        loginButton.setOnAction(new EventHandler<ActionEvent>()
+        {
+            @Override
+            public void handle(ActionEvent event)
+            {
+                /*
+                boolean loginSuccess = a_manager.getDriver().getLogin().login(emailField.getText(), passwordField.getText());
+                if(loginSuccess)
+                {
+                    a_manager.switchMenu(a_manager.getMainMenu())
+                }
+                */
+            }
+        });
         /*
         btn.setOnAction(new EventHandler<ActionEvent>()
         {

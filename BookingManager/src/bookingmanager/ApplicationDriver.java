@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 public class ApplicationDriver extends Application
 {
     private MenuManager menuManager;
+    //private Login login;
     @Override
     public void start(Stage primaryStage)
     {
@@ -30,4 +31,9 @@ public class ApplicationDriver extends Application
         launch(args);
     }
     
+    /*public Login getLogin()
+    {
+        return login;
+    }
+    */
 }
