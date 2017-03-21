@@ -27,7 +27,10 @@ public abstract class Menu
         rootPane.setAlignment(Pos.CENTER);
         rootPane.setId("background");
     }
-    
+    public MenuManager getManager()
+    {
+        return manager;
+    }
     //Called when we first create the menu.
     public abstract void initMenu();
     

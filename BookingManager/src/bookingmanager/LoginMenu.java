@@ -94,7 +94,7 @@ public class LoginMenu extends Menu
         if(!emailField.getText().equals("") && !passwordField.getText().equals(""))
         {
             //Submit to login function
-            if(manager.getLogin().login(emailField.getText(), passwordField.getText()))
+            if(getManager().getDriver().getLogin().login(emailField.getText(), passwordField.getText()))
             {
                 //success
             }
