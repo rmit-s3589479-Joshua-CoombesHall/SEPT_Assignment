@@ -87,17 +87,6 @@ public class LoginMenu extends Menu
                 loginSubmitted();
             }
         });
-        /*
-        btn.setOnAction(new EventHandler<ActionEvent>()
-        {
-            
-            @Override
-            public void handle(ActionEvent event)
-            {
-                System.out.println("Hello World!");
-            }
-        });
-        */
     }
     
     private void loginSubmitted()
@@ -105,7 +94,7 @@ public class LoginMenu extends Menu
         if(!emailField.getText().equals("") && !passwordField.getText().equals(""))
         {
             //Submit to login function
-            if(/*login function*/false)
+            if(manager.getLogin().login(emailField.getText(), passwordField.getText()))
             {
                 //success
             }
