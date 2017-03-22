@@ -96,7 +96,7 @@ public class LoginMenu extends Menu
             //Submit to login function
             if(getManager().getDriver().getLogin().login(emailField.getText(), passwordField.getText()))
             {
-                //success
+                errorLabel.setText("Login Success");
             }
             else
             {
@@ -120,6 +120,8 @@ public class LoginMenu extends Menu
     @Override
     public void onExit()
     {
-        
+        errorLabel.setText("");
+        emailField.setText("");
+        passwordField.setText("");
     }
 }
