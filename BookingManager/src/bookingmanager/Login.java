@@ -1,6 +1,7 @@
 
 package bookingmanager;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Login 
 {	
@@ -8,8 +9,9 @@ public class Login
 	User currentUser;
 	Login()
 	{
-		users = new ArrayList<User>();
-		currentUser = null;
+            users = new ArrayList<User>();
+            loadTestUsers();
+            currentUser = null;
 	}
 	public boolean login(String email, String password) 
         {
@@ -32,4 +34,10 @@ public class Login
             }
             return false;
 	}
+        
+        //Test Data.
+        public void loadTestUsers()
+        {
+            users.add(new Customer(0, "test@test.com", "test", "Jim", "Jenson", new Date(), "00000000"));
+        }
 }
