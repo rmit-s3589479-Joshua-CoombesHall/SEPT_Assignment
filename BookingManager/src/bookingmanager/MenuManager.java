@@ -69,7 +69,7 @@ public class MenuManager
     {
         primaryStage.setTitle("Appointment Booking System");
         menuScene = new Scene(mainPane, windowWidth, windowHeight);
-        menuScene.getStylesheets().add(getClass().getResource("stylesheet.css").toString());
+        menuScene.getStylesheets().add(getClass().getResource("stylesheet.css").toExternalForm());
         primaryStage.setScene(menuScene);
         menuScene.setRoot(mainPane);
         primaryStage.show();
