@@ -29,12 +29,17 @@ public class MenuManager
     
     //Menus
     private LoginMenu loginMenu;
+    private RegistrationMenu registrationMenu;
+    private BusinessMainMenu businessMainMenu;
+    
     
     MenuManager(ApplicationDriver a_driver, Stage a_primaryStage)
     {
         driver = a_driver;
         primaryStage = a_primaryStage;
         loginMenu = new LoginMenu(this);
+        registrationMenu = new RegistrationMenu(this);
+        businessMainMenu = new BusinessMainMenu(this);
         currentMenu = loginMenu;
         initMainPane();
         initStage();
@@ -75,11 +80,48 @@ public class MenuManager
         primaryStage.show();
     }
     
-    private void switchMenu(Menu a_newMenu)
+    /*
+    Menu References:
+    Login
+    Registration
+    RegistrationSuccess
+    CustomerMainMenu
+    BusinessMainMenu
+    
+    */
+    public void switchMenu(String a_menuRef)
     {
-        a_newMenu.onEntry();
+        Menu targetMenu = null;
+        //Switch statement here.
+        if(a_menuRef.equals("Login"))
+        {
+            targetMenu = loginMenu;
+        }
+        else if(a_menuRef.equals("Registration"))
+        {
+            targetMenu = registrationMenu;
+        }
+        else if(a_menuRef.equals("RegistrationSuccess"))
+        {
+            targetMenu = registrationMenu;
+        }
+        else if(a_menuRef.equals("RegistrationSuccess"))
+        {
+            //targetMenu = registrationMenu;
+        }
+        else if(a_menuRef.equals("CustomerMainMenu"))
+        {
+            //targetMenu = registrationMenu;
+        }
+        else if(a_menuRef.equals("BusinessMainMenu"))
+        {
+            //targetMenu = registrationMenu;
+        }
+        
+        
+        targetMenu.onEntry();
         currentMenu.onExit();
-        currentMenu = a_newMenu;
+        currentMenu = targetMenu;
         
         mainPane.setCenter(currentMenu.getPane());
     }
