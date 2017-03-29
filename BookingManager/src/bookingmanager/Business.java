@@ -24,6 +24,12 @@ public class Business extends User
         contactNumber = a_contactNumber;
     }
     
+    /*
+     * Ruaraidh Leary
+     * List of employees for business
+     */
+    ArrayList<Employee> employees;
+    
     public String getName()
     {
         return name;
@@ -37,6 +43,25 @@ public class Business extends User
     public String getContactNumber()
     {
         return contactNumber;
+    }
+    
+    /*
+     * Ruaraidh Leary
+     * Adds employee to business' list of employees
+     */
+    public void addEmployee(String name)
+    {
+    	employees.add(new Employee(name));
+    	
+    }
+    
+    /*
+     * Ruaraidh Leary
+     * Books time slot
+     */
+    public boolean bookTimeSlot(TimeSlot slot, Customer customer)
+    {
+    	
     }
 }
 

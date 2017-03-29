@@ -46,9 +46,9 @@ public class Login
         
         /* Adds new customer to customer array. Returns false if email is already in list, otherwise adds user and returns true
          * Doesn't save to file yet
-         * Ruaraidh Leary
+         * @author Ruaraidh Leary
          */
-        public boolean addCustomer(int id, String email, String password, String fname, String lname, Date dob, String number)
+        public boolean addCustomer(int id, String email, String password, String fname, String lname)
         {
         	/* Check if user already registered */
         	for(int i = 0; i < users.size(); i++)
@@ -58,7 +58,7 @@ public class Login
         			return false;
         		}
         	}
-        	users.add(new Customer(id, email, password, fname, lname, dob, number));
+        	users.add(new Customer(id, email, password, fname, lname,));
         	return true;
 
         	}
