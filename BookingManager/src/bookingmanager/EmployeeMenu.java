@@ -5,6 +5,7 @@
  */
 package bookingmanager;
 
+import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -23,6 +24,8 @@ import javafx.scene.text.Text;
 public class EmployeeMenu extends Menu
 {
     TextField addEmployeeNameField;
+    Business currentBusiness;
+    VBox employeeListPane;
     EmployeeMenu(MenuManager a_manager)
     {
         super(a_manager);
@@ -45,12 +48,8 @@ public class EmployeeMenu extends Menu
         content.add(innerContent, 0, 1);
         GridPane employeePane = new GridPane();
         innerContent.getChildren().add(employeePane);
-        VBox employeeListPane = new VBox();
+        employeeListPane = new VBox();
         employeePane.add(employeeListPane, 0, 0);
-        for(int i = 0; i < 5; i++)
-        {
-            employeeListPane.getChildren().add(new Label("Employee " + i));
-        }
         GridPane addEmployeePane = new GridPane();
         employeePane.add(addEmployeePane, 0, 1);
         Label addEmployeeHeading = new Label("Add Employee");
@@ -67,13 +66,20 @@ public class EmployeeMenu extends Menu
             public void handle(ActionEvent event)
             {
                 //Validate employee field and add them to the business.
+                if(!addEmployeeNameField.getText().equals(""))
+                {
+                    currentBusiness.addEmployee(addEmployeeNameField.getText());
+                    updateEmployeeList();
+                }
             }
         });
         
-        /*for(int i = 0; i < getEmployeeList().length(); i++)
-        {
-            employeeListPane.getChildren().add(new Label(getEmployeeList().get(i).getName()))
-        }*/
+        GridPane settingsPane = new GridPane();
+        content.add(settingsPane, 0, 2);
+        Label settingsHeading = new Label("Business Settings");
+        settingsPane.add(settingsHeading, 0, 0);
+        
+        
         
         /*registerButton.setOnAction(new EventHandler<ActionEvent>()
         {
@@ -86,15 +92,25 @@ public class EmployeeMenu extends Menu
 
     }
     
-    /*private ArrayList<User> getEmployeeList()
+    private void updateEmployeeList()
     {
-        return getManager().getDriver().getLogin().getCurrentUser().getEmployees();
-    }*/
+        employeeListPane.getChildren().clear();
+        for(int i = 0; i < getEmployeeList().size(); i++)
+        {
+            employeeListPane.getChildren().add(new Label(getEmployeeList().get(i).getName()));
+        }
+    }
+    
+    private ArrayList<Employee> getEmployeeList()
+    {
+        return currentBusiness.getEmployees();
+    }
     
     @Override
     public void onEntry()
     {
-        
+        currentBusiness = (Business)getManager().getDriver().getLogin().getCurrentUser();
+        updateEmployeeList();
     }
 
     @Override

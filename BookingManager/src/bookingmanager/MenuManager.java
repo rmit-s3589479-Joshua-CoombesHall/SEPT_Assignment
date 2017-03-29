@@ -125,8 +125,10 @@ public class MenuManager
             targetMenu = employeeMenu;
         }
         
-        
-        targetMenu.onEntry();
+        if(targetMenu!=null)
+        {
+            targetMenu.onEntry();
+        }
         currentMenu.onExit();
         currentMenu = targetMenu;
         

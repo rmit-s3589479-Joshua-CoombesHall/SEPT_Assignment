@@ -1,7 +1,7 @@
 package bookingmanager;		
 		
 import java.time.LocalDate;		
-import java.util.regex.Pattern;		
+import java.util.Date;		
 import javafx.event.ActionEvent;		
 import javafx.event.EventHandler;		
 import javafx.geometry.HPos;		
@@ -125,7 +125,14 @@ public class RegistrationMenu extends Menu
     {		
         if(fieldsAreValid())		
         {		
-            //getManager().getDriver().getLogin().addCustomer();		
+            if(getManager().getDriver().getLogin().addCustomer(0, emailField.getText(), passwordField1.getText(), firstNameField.getText(), lastNameField.getText(), new Date(), contactNumberField.getText()))
+            {
+                getManager().switchMenu("Login");
+            }
+            else
+            {
+                errorLabel.setText("Email already in use.");
+            }	
         }		
     }		
     		
@@ -281,6 +288,12 @@ public class RegistrationMenu extends Menu
     @Override		
     public void onExit()		
     {		
-		
+        emailField.clear();		
+        firstNameField.clear();		
+        lastNameField.clear();		
+        contactNumberField.clear();		
+        passwordField1.clear();		
+        passwordField2.clear();		
+        dobField.setValue(LocalDate.of(1980, 1, 1));	
     }		
 }

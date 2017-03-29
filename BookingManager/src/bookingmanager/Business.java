@@ -6,6 +6,7 @@
 package bookingmanager;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -16,20 +17,21 @@ public class Business extends User
     private String name;
     private String address;
     private String contactNumber;
-    //private ArrayList<Employee> employees;
+        /*
+     * Ruaraidh Leary
+     * List of employees for business
+     */
+    private ArrayList<Employee> employees;
+    ArrayList<Timeslot> timeslots;
     Business(int a_id, String a_email, String a_password, String a_name, String a_address, String a_contactNumber)
     {
         super(a_id, a_email, a_password);
         name = a_name;
         address = a_address;
         contactNumber = a_contactNumber;
+        employees = new ArrayList<Employee>();
+        timeslots = new ArrayList<Timeslot>();
     }
-    
-    /*
-     * Ruaraidh Leary
-     * List of employees for business
-     */
-    ArrayList<Employee> employees;
     
     public String getName()
     {
@@ -67,6 +69,22 @@ public class Business extends User
     public boolean bookTimeSlot(Timeslot slot, Customer customer)
     {
     	return false;
+    }
+    
+    //By Tony
+    public boolean createTimeSlot (Date startTime, Date endTime, Employee workingEmployee) 
+    {
+            //Checking the validity of proposed Timeslot.
+            /* 
+             * 
+             * */
+        Date currentDate = new Date();
+        if(startTime.after(endTime) || startTime.before(currentDate)) 
+        {
+            return false;
+        }
+        timeslots.add(new Timeslot(startTime));
+        return true;
     }
 }
 
