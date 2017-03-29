@@ -5,7 +5,7 @@ public class Timeslot {
 	private int startTime;
 	private Date apptDate;
 	
-	Timeslot(int startTime, Date apptDate) {
+	Timeslot(int a_startTime, Date a_apptDate) {
 		startTime = a_startTime;
 		apptDate = a_apptDate;
 	}
