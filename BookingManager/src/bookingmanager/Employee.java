@@ -1,3 +1,5 @@
+package bookingmanager;
+
 /*
  * @author Ruaraidh Leary
  */
