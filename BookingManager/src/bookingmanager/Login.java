@@ -42,39 +42,25 @@ public class Login
             users.add(new Customer(0, "test@test.com", "test", "Jim", "Jenson", new Date(), "00000000"));
         }
         
-        /*
-        public void loadData()
-        {
-        	Customer newUser;
-        	jsonArray = new JSONArray();
-        	for(int i =0; jsonArray.length(); i++)
-        	{
-        		newUser.a_id = (JSONObject) jsonArray.get("id");
-        		newUser.a_email = (JSONObject) jsonArray.get("email");
-        		newUser.a_password = (JSONObject) jsonArray.get("password");
-        		newUser.a_firstName = (JSONObject) jsonArray.get("fname");
-        		newUser.a_lastName = (JSONObject) jsonArray.get("lname");
-        		newUser.a_dob = (JSONObject) jsonArray.get("dob");
-        		newUser.a_number = (JSONObject) jsonArray.get("number");
-        	}
-        	
-        	users.add(newUser);
-        }
-        */
+
+        
+        /* Adds new customer to customer array. Returns false if email is already in list, otherwise adds user and returns true
+         * Doesn't save to file yet
+         * Ruaraidh Leary
+         */
         public boolean addCustomer(int id, String email, String password, String fname, String lname, Date dob, String number)
         {
-        	users.add(new Customer(id, email, password, fname, lname, dob, number));
-        	/* Check if user added */
+        	/* Check if user already registered */
         	for(int i = 0; i < users.size(); i++)
         	{
-        		if(id == users.get(i).getId())
-        		{
-        			return true;
-        		}
-        		else
+        		if(email == users.get(i).getEmail())
         		{
         			return false;
         		}
+        	}
+        	users.add(new Customer(id, email, password, fname, lname, dob, number));
+        	return true;
+
         	}
         }
 }
