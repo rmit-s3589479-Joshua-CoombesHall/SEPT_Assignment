@@ -64,9 +64,9 @@ public class Business extends User
      * Ruaraidh Leary
      * Books time slot
      */
-    public boolean bookTimeSlot(TimeSlot slot, Customer customer)
+    public boolean bookTimeSlot(Timeslot slot, Customer customer)
     {
-    	
+    	return false;
     }
 }
 
