@@ -5,6 +5,7 @@
  */
 package bookingmanager;
 
+import bookingmanager.Business;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -52,8 +53,13 @@ public class LoginMenu extends Menu
         content.add(passwordLabel, 0, 2);
         emailField = new TextField();
         content.add(emailField, 1, 1);
+        
         passwordField = new PasswordField();
         content.add(passwordField, 1, 2);
+        
+        //TEST INPUT
+        emailField.setText("testBusiness@test.com");
+        passwordField.setText("test");
         
         Button loginButton = new Button("Login");
         GridPane.setHalignment(loginButton, HPos.RIGHT);
@@ -105,6 +111,14 @@ public class LoginMenu extends Menu
             //Submit to login function
             if(getManager().getDriver().getLogin().login(emailField.getText(), passwordField.getText()))
             {
+                if(getManager().getDriver().getLogin().getCurrentUser() instanceof Business)
+                {
+                    getManager().switchMenu("BusinessMainMenu");
+                }
+                else
+                {
+                    getManager().switchMenu("CustomerMainMenu");
+                }
                 errorLabel.setText("Login Success");
             }
             else

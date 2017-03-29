@@ -5,6 +5,7 @@
  */
 package bookingmanager;
 
+import bookingmanager.ApplicationDriver;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -30,16 +31,18 @@ public class MenuManager
     //Menus
     private LoginMenu loginMenu;
     private RegistrationMenu registrationMenu;
-    private BusinessMainMenu businessMainMenu;
+    private BusinessMenu businessMenu;
+    private EmployeeMenu employeeMenu;
     
     
-    MenuManager(ApplicationDriver a_driver, Stage a_primaryStage)
+    public MenuManager(ApplicationDriver a_driver, Stage a_primaryStage)
     {
         driver = a_driver;
         primaryStage = a_primaryStage;
         loginMenu = new LoginMenu(this);
         registrationMenu = new RegistrationMenu(this);
-        businessMainMenu = new BusinessMainMenu(this);
+        businessMenu = new BusinessMenu(this);
+        employeeMenu = new EmployeeMenu(this);
         currentMenu = loginMenu;
         initMainPane();
         initStage();
@@ -115,7 +118,11 @@ public class MenuManager
         }
         else if(a_menuRef.equals("BusinessMainMenu"))
         {
-            //targetMenu = registrationMenu;
+            targetMenu = businessMenu;
+        }
+        else if(a_menuRef.equals("EmployeeMenu"))
+        {
+            targetMenu = employeeMenu;
         }
         
         

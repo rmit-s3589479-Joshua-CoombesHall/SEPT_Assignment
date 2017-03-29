@@ -5,8 +5,8 @@ import java.util.Date;
 
 public class Login 
 {	
-	ArrayList<User> users;
-	User currentUser;
+	private ArrayList<User> users;
+	private User currentUser;
 	Login()
 	{
             users = new ArrayList<User>();
@@ -35,9 +35,15 @@ public class Login
             return false;
 	}
         
+        public User getCurrentUser()
+        {
+            return currentUser;
+        }
+        
         //Test Data.
         public void loadTestUsers()
         {
-            users.add(new Customer(0, "test@test.com", "test", "Jim", "Jenson", new Date(), "00000000"));
+            users.add(new Customer(0, "testCustomer@test.com", "test", "Jim", "Jenson", new Date(), "00000000"));
+            users.add(new Business(0, "testBusiness@test.com", "test", "Globocom", "5 Fake St, Fakesville", "00000000"));
         }
 }

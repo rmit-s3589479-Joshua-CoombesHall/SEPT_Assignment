@@ -5,7 +5,7 @@
  */
 package bookingmanager;
 
-import java.util.Date;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,6 +16,7 @@ public class Business extends User
     private String name;
     private String address;
     private String contactNumber;
+    //private ArrayList<Employee> employees;
     Business(int a_id, String a_email, String a_password, String a_name, String a_address, String a_contactNumber)
     {
         super(a_id, a_email, a_password);
@@ -23,6 +24,11 @@ public class Business extends User
         address = a_address;
         contactNumber = a_contactNumber;
     }
+    
+    /*public ArrayList<Employee> getEmployees()
+    {
+        
+    }*/
     
     public String getName()
     {
