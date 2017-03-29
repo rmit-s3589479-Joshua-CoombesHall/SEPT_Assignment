@@ -64,8 +64,17 @@ public class LoginMenu extends Menu
         content.add(registerLink, 0, 4, 2, 1);
         
         errorLabel = new Label("");
-        errorLabel.setId("error");
+        errorLabel.getStyleClass().add("errorLabel");
         getPane().add(errorLabel, 0, 1);
+        
+        registerLink.setOnAction(new EventHandler<ActionEvent>()
+        {
+            @Override
+            public void handle(ActionEvent event)
+            {
+                getManager().switchMenu("Registration");
+            }
+        });
         
         content.setOnKeyPressed(new EventHandler<KeyEvent>()
         {
