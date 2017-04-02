@@ -7,7 +7,7 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-
+/* # @author Tony - s3439530 */
 public class writeFile {
 	
 	public void writecustomerJSON (List<User> data, FileWriter fileWriter, int instances) {
