@@ -17,6 +17,9 @@ public class Business extends User
     private String name;
     private String address;
     private String contactNumber;
+    private int timeSlotLength;
+    private Date[] openingTimes;
+    private Date[] closingTimes;
         /*
      * Ruaraidh Leary
      * List of employees for business
@@ -31,6 +34,8 @@ public class Business extends User
         contactNumber = a_contactNumber;
         employees = new ArrayList<Employee>();
         timeslots = new ArrayList<Timeslot>();
+        openingTimes = new Date[7];
+        closingTimes = new Date[7];
     }
     
     public String getName()
@@ -46,6 +51,27 @@ public class Business extends User
     public String getContactNumber()
     {
         return contactNumber;
+    }
+    
+    public void setTimeSlotLength(int a_time)
+    {
+        timeSlotLength = a_time;
+    }
+    
+    public void setOpeningTimes(Date[] times)
+    {
+        for(int i = 0; i < 7; i++)
+        {
+            openingTimes[i] = new Date(0, 0, 0, times[i].getHours(), times[i].getMinutes());
+        }
+    }
+    
+    public void setClosingTimes(Date[] times)
+    {
+        for(int i = 0; i < 7; i++)
+        {
+            closingTimes[i] = new Date(0, 0, 0, times[i].getHours(), times[i].getMinutes());
+        }
     }
     
     public ArrayList<Employee> getEmployees()
@@ -83,7 +109,7 @@ public class Business extends User
         {
             return false;
         }
-        timeslots.add(new Timeslot(startTime));
+        timeslots.add(new Timeslot(startTime, workingEmployee));
         return true;
     }
 }
