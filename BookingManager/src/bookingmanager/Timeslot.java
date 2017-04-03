@@ -16,7 +16,16 @@ public class Timeslot {
 		return apptDate;
 	}
 	
-	public int geteID() {
+	public int getID() {
 		return employeeID;
 	}
+        
+        public boolean equals(Timeslot comparing)
+        {
+            if(this.apptDate.compareTo(comparing.getDate()) == 0 && this.employeeID == comparing.getID())
+            {
+                return true;
+            }
+            else return false;
+        }
 }
