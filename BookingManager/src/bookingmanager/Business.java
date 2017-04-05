@@ -118,5 +118,21 @@ public class Business extends User
         timeslots.add(new Timeslot(startTime, workingEmployee));
         return true;
     }
+    
+    //By Josh.
+    public void deleteTimeSlots(Date startTime, Date endTime, Employee workingEmployee)
+    {
+        for(int i = 0; i < timeslots.size(); i++)
+        {
+            if(timeslots.get(i).getEmployee().equals(workingEmployee))
+            {
+                if(timeslots.get(i).getDate().equals(startTime) || (timeslots.get(i).getDate().after(startTime) && timeslots.get(i).getDate().before(endTime)))
+                {
+                    timeslots.remove(i);
+                    i--;
+                }
+            }
+        }
+    }
 }
 

@@ -12,6 +12,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -24,13 +25,20 @@ import javafx.scene.text.Text;
  */
 public class EmployeeMenu extends Menu
 {
+    Date openingTime = new Date();
+    Date middayTime = new Date();
+    Date closingTime = new Date();
+    
+    GridPane calenderPane;
     TextField addEmployeeNameField;
     TextField timeSlotLengthField;
     Business currentBusiness;
     VBox employeeListPane;
+    ScrollPane employeeListScrollable;
     
-    Button[][] calender = new Button[7][3];
+    Button[][] calender = new Button[7][2];
     TextField[][] openingTimes = new TextField[7][2];
+    static Employee curEmployee = null;
     EmployeeMenu(MenuManager a_manager)
     {
         super(a_manager);
@@ -40,6 +48,12 @@ public class EmployeeMenu extends Menu
     @Override
     public void initMenu()
     {
+        openingTime.setHours(9);
+        openingTime.setMinutes(0);
+        middayTime.setHours(13);
+        middayTime.setMinutes(0);
+        closingTime.setHours(17);
+        closingTime.setMinutes(0);
         GridPane content = new GridPane();
         getPane().add(content, 0, 0);
         content.setId("root");
@@ -54,7 +68,9 @@ public class EmployeeMenu extends Menu
         GridPane employeePane = new GridPane();
         innerContent.getChildren().add(employeePane);
         employeeListPane = new VBox();
-        employeePane.add(employeeListPane, 0, 0);
+        employeeListPane.setPrefHeight(100);
+        employeeListScrollable = new ScrollPane(employeeListPane);
+        employeePane.add(employeeListScrollable, 0, 0);
         GridPane addEmployeePane = new GridPane();
         employeePane.add(addEmployeePane, 0, 1);
         Label addEmployeeHeading = new Label("Add Employee");
@@ -74,14 +90,74 @@ public class EmployeeMenu extends Menu
                 if(!addEmployeeNameField.getText().equals(""))
                 {
                     currentBusiness.addEmployee(addEmployeeNameField.getText());
+                    addEmployeeNameField.setText("");
                     updateEmployeeList();
                 }
             }
         });
         
-        GridPane calenderPane = new GridPane();
-        innerContent.getChildren().add(calenderPane);
         
+        calenderPane = new GridPane();
+        innerContent.getChildren().add(calenderPane);
+        updateCalender();
+        
+        GridPane settingsPane = new GridPane();
+        content.add(settingsPane, 0, 2);
+        
+        Label settingsHeading = new Label("Business Settings");
+        settingsPane.add(settingsHeading, 0, 0);
+        /*
+        Label timeSlotLengthLabel = new Label("Time Slot Length: ");
+        settingsPane.add(timeSlotLengthLabel, 0, 1);
+        timeSlotLengthField = new TextField();
+        settingsPane.add(timeSlotLengthField, 0, 2);
+        */
+        GridPane openTimesPanel = new GridPane();
+        settingsPane.add(openTimesPanel, 0, 1);
+
+        /*
+        Label openTimesHeadingLabel = new Label("Operating Hours");
+        openTimesPanel.add(openTimesHeadingLabel, 0, 0, 3, 1);
+        Label openLabel = new Label("Opening");
+        openTimesPanel.add(openLabel, 1, 1);
+        Label closeLabel = new Label("Closing");
+        openTimesPanel.add(closeLabel, 2, 1);
+        Label monLabel = new Label("Mon");
+        openTimesPanel.add(monLabel, 0, 2);
+        Label tueLabel = new Label("Tue");
+        openTimesPanel.add(tueLabel, 0, 3);
+        Label wedLabel = new Label("Wed");
+        openTimesPanel.add(wedLabel, 0, 4);
+        Label thurLabel = new Label("Thur");
+        openTimesPanel.add(thurLabel, 0, 5);
+        Label friLabel = new Label("Fri");
+        openTimesPanel.add(friLabel, 0, 6);
+        Label satLabel = new Label("Sat");
+        openTimesPanel.add(satLabel, 0, 7);
+        Label sunLabel = new Label("Sun");
+        openTimesPanel.add(sunLabel, 0, 8);
+        for(int i = 0; i < 7; i++)
+        {
+            openingTimes[i][0] = new TextField();
+            openTimesPanel.add(openingTimes[i][0], 1, i+2);
+            openingTimes[i][1] = new TextField();
+            openTimesPanel.add(openingTimes[i][1], 2, i+2);
+        }
+        */
+
+    }
+    
+    private void applySettings()
+    {
+        if(Integer.getInteger(timeSlotLengthField.getText()) != null)
+        {
+            currentBusiness.setTimeSlotLength(Integer.parseInt(timeSlotLengthField.getText()));
+        }
+    }
+    
+    private void updateCalender()
+    {
+        calenderPane.getChildren().clear();
         Date today = new Date();
         for(int i = 0; i < 7; i++)
         {
@@ -130,7 +206,7 @@ public class EmployeeMenu extends Menu
             calenderPane.add(newDate, i+1, 0);
         }
         
-        for(int i = 0; i < 3; i++)
+        for(int i = 0; i < 2; i++)
         {
             Label time = new Label("9:00 A.M");
             calenderPane.add(time, 0, i+1);
@@ -138,72 +214,78 @@ public class EmployeeMenu extends Menu
         
         for(int i = 0; i < 7; i++)
         {
-            for(int x = 0; x < 3; x++)
+            for(int x = 0; x < 2; x++)
             {
                 calender[i][x] = new Button();
+                calender[i][x].setId("employeeNotWorkingButton");
+                calender[i][x].setOnAction(new EventHandler<ActionEvent>()
+                {
+                    @Override
+                    public void handle(ActionEvent event)
+                    {
+                        for(int i = 0; i < 7; i++)
+                        {
+                            for(int x = 0; x < 2; x++)
+                            {
+                                Button checker = (Button)event.getSource();
+                                if(checker == calender[i][x])
+                                {
+                                    Date bookedDate = new Date();
+                                    Date bookingEndDate = new Date();
+                                    bookedDate.setDate(bookedDate.getDate()+i);
+                                    bookingEndDate.setDate(bookingEndDate.getDate()+i);
+                                    bookedDate.setSeconds(0);
+                                    bookingEndDate.setSeconds(0);
+                                    if(x == 0)
+                                    {
+                                        bookedDate.setHours(openingTime.getHours());
+                                        bookedDate.setMinutes(openingTime.getMinutes());
+                                        bookingEndDate.setHours(middayTime.getHours());
+                                        bookingEndDate.setMinutes(middayTime.getMinutes());
+                                    }
+                                    else if(x == 1)
+                                    {
+                                        bookedDate.setHours(middayTime.getHours());
+                                        bookedDate.setMinutes(middayTime.getMinutes());
+                                        bookingEndDate.setHours(closingTime.getHours());
+                                        bookingEndDate.setMinutes(closingTime.getMinutes());
+                                    }
+                                    
+                                    //We are where we want to be to call the create function.
+                                    Business curBusiness = (Business)getManager().getDriver().getLogin().getCurrentUser();
+                                    //curBusiness.createTimeSlot(bookedDate, openingTime, curEmployee);
+                                    if(curEmployee != null)
+                                    {
+                                        Button targetSlot = (Button)event.getSource();
+                                        if(targetSlot.getId().equals("employeeNotWorkingButton"))
+                                        {
+                                            targetSlot.setId("employeeWorkingButton");
+                                            while(bookedDate.before(bookingEndDate))
+                                            {
+                                                
+                                                curBusiness.createTimeSlot((Date)bookedDate.clone(), curEmployee);
+                                                bookedDate.setMinutes(bookedDate.getMinutes()+curBusiness.getTimeSlotLength());
+                                            }
+                                            System.out.println("Completed adding employee timeslots.");
+                                        }
+                                        else
+                                        {
+                                            targetSlot.setId("employeeNotWorkingButton");
+                                            curBusiness.deleteTimeSlots(bookedDate, bookingEndDate, curEmployee);
+                                            System.out.println("Completed removing employee timeslots.");
+                                        }
+                                    }
+                                }
+                                
+                            }
+                        }
+                    }
+                });
                 calenderPane.add(calender[i][x], i+1, x+1);
             }
         }
-        
-        GridPane settingsPane = new GridPane();
-        content.add(settingsPane, 0, 2);
-        
-        Label settingsHeading = new Label("Business Settings");
-        settingsPane.add(settingsHeading, 0, 0);
-        
-        Label timeSlotLengthLabel = new Label("Time Slot Length: ");
-        settingsPane.add(timeSlotLengthLabel, 0, 1);
-        timeSlotLengthField = new TextField();
-        settingsPane.add(timeSlotLengthField, 0, 2);
-        
-        GridPane openTimesPanel = new GridPane();
-        settingsPane.add(openTimesPanel, 1, 0 ,1, 2);
-
-        Label openTimesHeadingLabel = new Label("Operating Hours");
-        openTimesPanel.add(openTimesHeadingLabel, 0, 0, 3, 1);
-        Label openLabel = new Label("Opening");
-        openTimesPanel.add(openLabel, 1, 1);
-        Label closeLabel = new Label("Closing");
-        openTimesPanel.add(closeLabel, 2, 1);
-        Label monLabel = new Label("Mon");
-        openTimesPanel.add(monLabel, 0, 2);
-        Label tueLabel = new Label("Tue");
-        openTimesPanel.add(tueLabel, 0, 3);
-        Label wedLabel = new Label("Wed");
-        openTimesPanel.add(wedLabel, 0, 4);
-        Label thurLabel = new Label("Thur");
-        openTimesPanel.add(thurLabel, 0, 5);
-        Label friLabel = new Label("Fri");
-        openTimesPanel.add(friLabel, 0, 6);
-        Label satLabel = new Label("Sat");
-        openTimesPanel.add(satLabel, 0, 7);
-        Label sunLabel = new Label("Sun");
-        openTimesPanel.add(sunLabel, 0, 8);
-        for(int i = 0; i < 7; i++)
-        {
-            openingTimes[i][0] = new TextField();
-            openTimesPanel.add(openingTimes[i][0], 1, i+3);
-            openingTimes[i][1] = new TextField();
-            openTimesPanel.add(openingTimes[i][1], 2, i+3);
-        }
-        
-        /*registerButton.setOnAction(new EventHandler<ActionEvent>()
-        {
-            @Override
-            public void handle(ActionEvent event)
-            {
-
-            }
-        });*/
-
-    }
-    
-    private void applySettings()
-    {
-        if(Integer.getInteger(timeSlotLengthField.getText()) != null)
-        {
-            currentBusiness.setTimeSlotLength(Integer.parseInt(timeSlotLengthField.getText()));
-        }
+        Label key = new Label("Black = Not Working, White = Working");
+        calenderPane.add(key, 0, 4, 8, 1);
     }
     
     private void updateEmployeeList()
@@ -211,7 +293,29 @@ public class EmployeeMenu extends Menu
         employeeListPane.getChildren().clear();
         for(int i = 0; i < getEmployeeList().size(); i++)
         {
-            employeeListPane.getChildren().add(new Label(getEmployeeList().get(i).getName()));
+            Button thisEmployeeButton = new Button(getEmployeeList().get(i).getName());
+            employeeListPane.getChildren().add(thisEmployeeButton);
+            thisEmployeeButton.setOnAction(new EventHandler<ActionEvent>()
+            {
+                @Override
+                public void handle(ActionEvent event)
+                {
+                    updateEmployeeList();
+                    Button originButton = (Button)event.getSource();
+                    originButton.getText();
+                    for(int i = 0; i < employeeListPane.getChildren().size(); i++)
+                    {
+                        
+                        Button targetEmployee = (Button)employeeListPane.getChildren().get(i);
+                        if(targetEmployee.getText().equals(originButton.getText()))
+                        {
+                            curEmployee = getEmployeeList().get(i);
+                            targetEmployee.setText(targetEmployee.getText() + "*");
+                        }
+                    }
+                    updateCalender();
+                }
+            });
         }
     }
     
