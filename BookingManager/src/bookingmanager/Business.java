@@ -103,6 +103,12 @@ public class Business extends User
         return curNextID++;
     }
     
+
+    public ArrayList<Timeslot> getAllTimeslots()
+    {
+        return timeslots;
+    }
+    
     /*
      * Ruaraidh Leary
      * Books time slot
