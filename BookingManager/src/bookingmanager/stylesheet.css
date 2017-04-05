@@ -37,6 +37,16 @@ and open the template in the editor.
     -fx-font-size: 32;
 }
 
+#employeeNotWorkingButton
+{
+    -fx-background-color:black;
+}
+
+#employeeWorkingButton
+{
+    -fx-background-color:white;
+}
+
 .errorLabel
 {
     -fx-text-fill: red;
