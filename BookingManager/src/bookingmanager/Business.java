@@ -20,15 +20,18 @@ public class Business extends User
     private int timeSlotLength;
     private Date[] openingTimes;
     private Date[] closingTimes;
+    private int curNextID;
         /*
      * Ruaraidh Leary
      * List of employees for business
      */
     private ArrayList<Employee> employees;
-    ArrayList<Timeslot> timeslots;
+    private ArrayList<Timeslot> timeslots;
+    private ArrayList<Appointment> appointments;
     Business(int a_id, String a_email, String a_password, String a_name, String a_address, String a_contactNumber)
     {
         super(a_id, a_email, a_password);
+        curNextID = 0;
         name = a_name;
         address = a_address;
         contactNumber = a_contactNumber;
@@ -37,6 +40,7 @@ public class Business extends User
         timeSlotLength = 30;
         openingTimes = new Date[7];
         closingTimes = new Date[7];
+        appointments = new ArrayList<Appointment>();
     }
     
     public String getName()
@@ -91,7 +95,12 @@ public class Business extends User
      */
     public void addEmployee(String name)
     {
-    	employees.add(new Employee(name));
+    	employees.add(new Employee(name, getNextID()));
+    }
+    
+    public int getNextID()
+    {
+        return curNextID++;
     }
     
     /*
@@ -115,7 +124,7 @@ public class Business extends User
         {
             return false;
         }
-        timeslots.add(new Timeslot(startTime, workingEmployee));
+        timeslots.add(new Timeslot(startTime, workingEmployee.getID()));
         return true;
     }
     
@@ -124,7 +133,7 @@ public class Business extends User
     {
         for(int i = 0; i < timeslots.size(); i++)
         {
-            if(timeslots.get(i).getEmployee().equals(workingEmployee))
+            if(timeslots.get(i).getEmployeeID() == workingEmployee.getID())
             {
                 if(timeslots.get(i).getDate().equals(startTime) || (timeslots.get(i).getDate().after(startTime) && timeslots.get(i).getDate().before(endTime)))
                 {
@@ -133,6 +142,32 @@ public class Business extends User
                 }
             }
         }
+    }
+    /* Harry Meskell
+     * Cycles through all timeslots, comparing each one to appointments
+     * If the timeslot is not in an appointment already, it is available
+     * and is added to an arrayList which is returned.
+    */
+    public ArrayList<Timeslot> getAvailableTimeslots()
+    {
+        ArrayList<Timeslot> availableTimes = new ArrayList<Timeslot>();
+        boolean found = false;
+        
+         for(int i=0; i<timeslots.size();i++)
+         {
+             for(int j=0; j<appointments.size();j++)
+             {
+                 if(appointments.get(j).getTimeslot().equals(timeslots.get(i)))
+                 {
+                     found = true;
+                     break;
+                 }
+             }
+             if(found == true) found = false;
+             else availableTimes.add(timeslots.get(i));
+         }
+         
+         return availableTimes;
     }
 }
 
