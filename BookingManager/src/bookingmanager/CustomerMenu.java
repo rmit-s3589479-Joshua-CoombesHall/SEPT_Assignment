@@ -23,9 +23,9 @@ import javafx.scene.text.Text;
  *
  * @author joshuahall
  */
-public class BusinessMenu extends Menu
+public class CustomerMenu extends Menu
 {   
-    BusinessMenu(MenuManager a_manager)
+    CustomerMenu(MenuManager a_manager)
     {
         super(a_manager);
         initMenu();
@@ -40,33 +40,19 @@ public class BusinessMenu extends Menu
         content.setHgap(10);
         content.setVgap(10);
         content.setPadding(new Insets(0,0,0,0));
-        Label heading = new Label("Business Menu");
+        Label heading = new Label("Customer Menu");
         content.add(heading, 0, 0);
         
-        Button employeesButton = new Button("Manage Employees");
-        GridPane.setHalignment(employeesButton, HPos.CENTER);
-        content.add(employeesButton, 0, 1);
+        Button makeBookingButton = new Button("Make Bookings");
+        GridPane.setHalignment(makeBookingButton, HPos.CENTER);
+        content.add(makeBookingButton, 0, 1);
         
-        Button viewButton = new Button("View Bookings");
-        GridPane.setHalignment(viewButton, HPos.CENTER);
-        content.add(viewButton, 0, 2);
-        
-        
-        employeesButton.setOnAction(new EventHandler<ActionEvent>()
+        makeBookingButton.setOnAction(new EventHandler<ActionEvent>()
         {
             @Override
             public void handle(ActionEvent event)
             {
-                getManager().switchMenu("EmployeeMenu");
-            }
-        });
-        
-        viewButton.setOnAction(new EventHandler<ActionEvent>()
-        {
-            @Override
-            public void handle(ActionEvent event)
-            {
-                getManager().switchMenu("ReviewBookings");
+                getManager().switchMenu("MakeBooking");
             }
         });
        

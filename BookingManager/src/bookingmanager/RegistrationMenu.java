@@ -295,5 +295,11 @@ public class RegistrationMenu extends Menu
         passwordField1.clear();		
         passwordField2.clear();		
         dobField.setValue(LocalDate.of(1980, 1, 1));	
-    }		
+    }
+    
+    @Override
+    public String getBackLocation()
+    {
+        return "Login";
+    }
 }

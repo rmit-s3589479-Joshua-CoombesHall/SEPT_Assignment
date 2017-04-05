@@ -5,9 +5,11 @@
  */
 package bookingmanager;
 
-import bookingmanager.ApplicationDriver;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -27,12 +29,15 @@ public class MenuManager
     private Scene menuScene;
     private BorderPane mainPane;
     private HBox header;
-    
+    private Button backButton;
     //Menus
     private LoginMenu loginMenu;
     private RegistrationMenu registrationMenu;
     private BusinessMenu businessMenu;
     private EmployeeMenu employeeMenu;
+    
+    private CustomerMenu customerMenu;
+    private BookingMenu bookingMenu;
     
     
     public MenuManager(ApplicationDriver a_driver, Stage a_primaryStage)
@@ -43,6 +48,8 @@ public class MenuManager
         registrationMenu = new RegistrationMenu(this);
         businessMenu = new BusinessMenu(this);
         employeeMenu = new EmployeeMenu(this);
+        customerMenu = new CustomerMenu(this);
+        bookingMenu = new BookingMenu(this);
         currentMenu = loginMenu;
         initMainPane();
         initStage();
@@ -66,10 +73,24 @@ public class MenuManager
         //This is where I will add the header info.
         header = new HBox();
         header.setId("header");
-        header.setAlignment(Pos.CENTER);
+        
+        backButton = new Button("Back");
+        backButton.setAlignment(Pos.CENTER_LEFT);
+        backButton.setOnAction(new EventHandler<ActionEvent>()
+        {
+            @Override
+            public void handle(ActionEvent event)
+            {
+                switchMenu(currentMenu.getBackLocation());
+            }
+        });
+        header.getChildren().add(backButton);
+        backButton.setVisible(false);
         Label heading = new Label("Appointment Booking System");
+        heading.setAlignment(Pos.CENTER);
         heading.setId("heading");
         header.getChildren().add(heading);
+
         mainPane.setTop(header);
     }
     
@@ -106,15 +127,15 @@ public class MenuManager
         }
         else if(a_menuRef.equals("RegistrationSuccess"))
         {
-            targetMenu = registrationMenu;
-        }
-        else if(a_menuRef.equals("RegistrationSuccess"))
-        {
             //targetMenu = registrationMenu;
         }
         else if(a_menuRef.equals("CustomerMainMenu"))
         {
-            //targetMenu = registrationMenu;
+            targetMenu = customerMenu;
+        }
+        else if(a_menuRef.equals("MakeBooking"))
+        {
+            targetMenu = bookingMenu;
         }
         else if(a_menuRef.equals("BusinessMainMenu"))
         {
@@ -133,5 +154,10 @@ public class MenuManager
         currentMenu = targetMenu;
         
         mainPane.setCenter(currentMenu.getPane());
+    }
+    
+    public void setBackButtonVisibility(boolean isVisible)
+    {
+        backButton.setVisible(isVisible);
     }
 }

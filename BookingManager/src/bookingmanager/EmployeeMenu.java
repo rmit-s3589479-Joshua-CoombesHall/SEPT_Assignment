@@ -99,7 +99,6 @@ public class EmployeeMenu extends Menu
         
         calenderPane = new GridPane();
         innerContent.getChildren().add(calenderPane);
-        updateCalender();
         
         GridPane settingsPane = new GridPane();
         content.add(settingsPane, 0, 2);
@@ -206,11 +205,12 @@ public class EmployeeMenu extends Menu
             calenderPane.add(newDate, i+1, 0);
         }
         
-        for(int i = 0; i < 2; i++)
-        {
-            Label time = new Label("9:00 A.M");
-            calenderPane.add(time, 0, i+1);
-        }
+        String openingTimeString = String.format("%1$tH:%1$tM", openingTime);
+        Label openingTimeLabel = new Label(openingTimeString);
+        calenderPane.add(openingTimeLabel, 0, 1);
+        String middayTimeString = String.format("%1$tH:%1$tM", middayTime);
+        Label middayTimeLabel = new Label(middayTimeString);
+        calenderPane.add(middayTimeLabel, 0, 2);
         
         for(int i = 0; i < 7; i++)
         {
@@ -218,6 +218,45 @@ public class EmployeeMenu extends Menu
             {
                 calender[i][x] = new Button();
                 calender[i][x].setId("employeeNotWorkingButton");
+                if(getManager().getDriver().getLogin().getCurrentUser() != null)
+                {
+                    Business curBusiness = (Business)getManager().getDriver().getLogin().getCurrentUser();
+                    Date bookedDate = new Date();
+                    Date bookingEndDate = new Date();
+                    bookedDate.setDate(bookedDate.getDate()+i);
+                    bookingEndDate.setDate(bookingEndDate.getDate()+i);
+                    bookedDate.setSeconds(0);
+                    bookingEndDate.setSeconds(0);
+                    if(i==1)
+                    {
+                     //hold up.
+                        int g = 1;
+                    }
+                    if(x == 0)
+                    {
+                        bookedDate.setHours(openingTime.getHours());
+                        bookedDate.setMinutes(openingTime.getMinutes());
+                        bookingEndDate.setHours(middayTime.getHours());
+                        bookingEndDate.setMinutes(middayTime.getMinutes());
+                    }
+                    else if(x == 1)
+                    {
+                        bookedDate.setHours(middayTime.getHours());
+                        bookedDate.setMinutes(middayTime.getMinutes());
+                        bookingEndDate.setHours(closingTime.getHours());
+                        bookingEndDate.setMinutes(closingTime.getMinutes());
+                    }
+                    for(int z = 0; z < curBusiness.getAllTimeslots().size(); z++)
+                    {
+                        if(curBusiness.getAllTimeslots().get(z).getDate().getHours() == bookedDate.getHours() &&
+                                curBusiness.getAllTimeslots().get(z).getDate().getDate() == bookedDate.getDate() &&
+                                curBusiness.getAllTimeslots().get(z).getEmployeeID() == curEmployee.getID())
+                        {
+                            calender[i][x].setId("employeeWorkingButton");
+                            break;
+                        }
+                    }
+                }
                 calender[i][x].setOnAction(new EventHandler<ActionEvent>()
                 {
                     @Override
@@ -253,7 +292,7 @@ public class EmployeeMenu extends Menu
                                     
                                     //We are where we want to be to call the create function.
                                     Business curBusiness = (Business)getManager().getDriver().getLogin().getCurrentUser();
-                                    //curBusiness.createTimeSlot(bookedDate, openingTime, curEmployee);
+                                    
                                     if(curEmployee != null)
                                     {
                                         Button targetSlot = (Button)event.getSource();
@@ -335,5 +374,11 @@ public class EmployeeMenu extends Menu
     public void onExit()
     {
 
+    }
+    
+    @Override
+    public String getBackLocation()
+    {
+        return "BusinessMainMenu";
     }
 }
