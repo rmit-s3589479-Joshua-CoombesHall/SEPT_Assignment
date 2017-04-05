@@ -34,6 +34,7 @@ public class Business extends User
         contactNumber = a_contactNumber;
         employees = new ArrayList<Employee>();
         timeslots = new ArrayList<Timeslot>();
+        timeSlotLength = 30;
         openingTimes = new Date[7];
         closingTimes = new Date[7];
     }
@@ -56,6 +57,11 @@ public class Business extends User
     public void setTimeSlotLength(int a_time)
     {
         timeSlotLength = a_time;
+    }
+    
+    public int getTimeSlotLength()
+    {
+        return timeSlotLength;
     }
     
     public void setOpeningTimes(Date[] times)
@@ -98,14 +104,14 @@ public class Business extends User
     }
     
     //By Tony
-    public boolean createTimeSlot (Date startTime, Date endTime, Employee workingEmployee) 
+    public boolean createTimeSlot (Date startTime, Employee workingEmployee) 
     {
             //Checking the validity of proposed Timeslot.
             /* 
              * 
              * */
         Date currentDate = new Date();
-        if(startTime.after(endTime) || startTime.before(currentDate)) 
+        if(startTime.before(currentDate)) 
         {
             return false;
         }
