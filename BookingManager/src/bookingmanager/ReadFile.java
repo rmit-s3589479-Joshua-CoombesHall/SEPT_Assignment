@@ -16,11 +16,6 @@ public class ReadFile {
 	private static final Type USER_TYPE = new TypeToken<List<User>>() {}.getType();
 	private static final Type CUSTOMER_TYPE = new TypeToken<List<Customer>>() {}.getType();
 	private static final Type BUSINESS_TYPE = new TypeToken<List<Business>>() {}.getType();
-	
-        ReadFile()
-        {
-            
-        }
         
 	public List<Customer> loadCustomers() {
 		List<Customer> customers = new ArrayList<>();

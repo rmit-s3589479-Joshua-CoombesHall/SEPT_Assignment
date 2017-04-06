@@ -125,7 +125,7 @@ public class RegistrationMenu extends Menu
     {		
         if(fieldsAreValid())		
         {		
-            if(getManager().getDriver().getLogin().addCustomer(0, emailField.getText(), passwordField1.getText(), firstNameField.getText(), lastNameField.getText(), new Date(), contactNumberField.getText()))
+            if(getManager().getDriver().getApp().addCustomer(0, emailField.getText(), passwordField1.getText(), firstNameField.getText(), lastNameField.getText(), new Date(), contactNumberField.getText()))
             {
                 getManager().switchMenu("Login");
             }

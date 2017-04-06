@@ -7,9 +7,12 @@ public class App
 {	
     private ArrayList<User> users;
     private User currentUser;
+    private ReadFile reader;
     App()
     {
-        users = new ArrayList<User>();
+        users = new ArrayList();
+        reader = new ReadFile();
+        users.addAll(reader.readFromFile());
         currentUser = null;
     }
     public boolean login(String email, String password) 
