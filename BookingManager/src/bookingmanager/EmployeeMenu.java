@@ -218,9 +218,9 @@ public class EmployeeMenu extends Menu
             {
                 calender[i][x] = new Button();
                 calender[i][x].setId("employeeNotWorkingButton");
-                if(getManager().getDriver().getApp().getCurrentUser() != null)
+                if(getManager().getDriver().getLogin().getCurrentUser() != null)
                 {
-                    Business curBusiness = (Business)getManager().getDriver().getApp().getCurrentUser();
+                    Business curBusiness = (Business)getManager().getDriver().getLogin().getCurrentUser();
                     Date bookedDate = new Date();
                     Date bookingEndDate = new Date();
                     bookedDate.setDate(bookedDate.getDate()+i);
@@ -291,7 +291,7 @@ public class EmployeeMenu extends Menu
                                     }
                                     
                                     //We are where we want to be to call the create function.
-                                    Business curBusiness = (Business)getManager().getDriver().getApp().getCurrentUser();
+                                    Business curBusiness = (Business)getManager().getDriver().getLogin().getCurrentUser();
                                     
                                     if(curEmployee != null)
                                     {
@@ -366,7 +366,7 @@ public class EmployeeMenu extends Menu
     @Override
     public void onEntry()
     {
-        currentBusiness = (Business)getManager().getDriver().getApp().getCurrentUser();
+        currentBusiness = (Business)getManager().getDriver().getLogin().getCurrentUser();
         updateEmployeeList();
     }
 

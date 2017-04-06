@@ -15,17 +15,12 @@ import javafx.stage.Stage;
 public class ApplicationDriver extends Application
 {
     private MenuManager menuManager;
-    private App app;
-    private ReadFile reader;
-    private WriteFile writer;
+    private Login login;
     @Override
     public void start(Stage primaryStage)
     {
         menuManager = new MenuManager(this, primaryStage);
-        app = new App();
-        reader = new ReadFile();
-        writer = new WriteFile();
-        app.setUsers(reader.readFromFile());
+        login = new Login();
     }
 
     public static void main(String[] args)
@@ -33,14 +28,8 @@ public class ApplicationDriver extends Application
         launch(args);
     }
     
-    @Override
-    public void stop()
+    public Login getLogin()
     {
-        writer.writetoFile(app.getUsers());
-    }
-    
-    public App getApp()
-    {
-        return app;
+        return login;
     }
 }

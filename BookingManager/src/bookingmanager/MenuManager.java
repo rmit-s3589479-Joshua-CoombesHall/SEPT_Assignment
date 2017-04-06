@@ -160,6 +160,4 @@ public class MenuManager
     {
         backButton.setVisible(isVisible);
     }
-    
-    
 }
