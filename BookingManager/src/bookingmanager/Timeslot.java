@@ -6,7 +6,6 @@ import java.util.Date;
 public class Timeslot {
 	private Date apptDate;
 	private int employeeID;
-
 	Timeslot(Date a_apptDate, int a_employeeID) {
 		apptDate = a_apptDate;
 		employeeID = a_employeeID;

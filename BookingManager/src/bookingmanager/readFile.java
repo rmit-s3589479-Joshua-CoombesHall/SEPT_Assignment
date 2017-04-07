@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -59,11 +60,12 @@ public class readFile {
 		return businesses;
 	}
 	
-	public boolean readFromFile() {
-		loadCustomers();
-		loadBusiness();
-		
-		return true;
+	public ArrayList<User> readFromFile() {
+      ArrayList<User> jointArray = new ArrayList();
+      jointArray.addAll(loadCustomers());
+      jointArray.addAll(loadBusiness());
+
+		return jointArray;
 	}
 
 }

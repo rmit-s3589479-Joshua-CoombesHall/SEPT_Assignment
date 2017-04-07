@@ -149,6 +149,7 @@ public class Business extends User
             }
         }
     }
+    
     /* Harry Meskell
      * Cycles through all timeslots, comparing each one to appointments
      * If the timeslot is not in an appointment already, it is available
