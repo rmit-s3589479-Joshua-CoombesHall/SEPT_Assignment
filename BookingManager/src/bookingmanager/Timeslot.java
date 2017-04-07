@@ -6,7 +6,6 @@ import java.util.Date;
 public class Timeslot {
 	private Date apptDate;
 	private int employeeID;
-	
 	Timeslot(Date a_apptDate, int a_employeeID) {
 		apptDate = a_apptDate;
 		employeeID = a_employeeID;
@@ -16,13 +15,13 @@ public class Timeslot {
 		return apptDate;
 	}
 	
-	public int getID() {
+	public int getEmployeeID() {
 		return employeeID;
 	}
         
         public boolean equals(Timeslot comparing)
         {
-            if(this.apptDate.compareTo(comparing.getDate()) == 0 && this.employeeID == comparing.getID())
+            if(this.apptDate.compareTo(comparing.getDate()) == 0 && this.employeeID == comparing.getEmployeeID())
             {
                 return true;
             }

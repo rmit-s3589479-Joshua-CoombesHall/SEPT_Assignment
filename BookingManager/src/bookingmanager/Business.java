@@ -17,6 +17,10 @@ public class Business extends User
     private String name;
     private String address;
     private String contactNumber;
+    private int timeSlotLength;
+    private Date[] openingTimes;
+    private Date[] closingTimes;
+    private int curNextID;
         /*
      * Ruaraidh Leary
      * List of employees for business
@@ -27,11 +31,15 @@ public class Business extends User
     Business(int a_id, String a_email, String a_password, String a_name, String a_address, String a_contactNumber)
     {
         super(a_id, a_email, a_password);
+        curNextID = 0;
         name = a_name;
         address = a_address;
         contactNumber = a_contactNumber;
         employees = new ArrayList<Employee>();
         timeslots = new ArrayList<Timeslot>();
+        timeSlotLength = 30;
+        openingTimes = new Date[7];
+        closingTimes = new Date[7];
         appointments = new ArrayList<Appointment>();
     }
     
@@ -50,6 +58,32 @@ public class Business extends User
         return contactNumber;
     }
     
+    public void setTimeSlotLength(int a_time)
+    {
+        timeSlotLength = a_time;
+    }
+    
+    public int getTimeSlotLength()
+    {
+        return timeSlotLength;
+    }
+    
+    public void setOpeningTimes(Date[] times)
+    {
+        for(int i = 0; i < 7; i++)
+        {
+            openingTimes[i] = new Date(0, 0, 0, times[i].getHours(), times[i].getMinutes());
+        }
+    }
+    
+    public void setClosingTimes(Date[] times)
+    {
+        for(int i = 0; i < 7; i++)
+        {
+            closingTimes[i] = new Date(0, 0, 0, times[i].getHours(), times[i].getMinutes());
+        }
+    }
+    
     public ArrayList<Employee> getEmployees()
     {
         return employees;
@@ -61,7 +95,18 @@ public class Business extends User
      */
     public void addEmployee(String name)
     {
-    	employees.add(new Employee(name));
+    	employees.add(new Employee(name, getNextID()));
+    }
+    
+    public int getNextID()
+    {
+        return curNextID++;
+    }
+    
+
+    public ArrayList<Timeslot> getAllTimeslots()
+    {
+        return timeslots;
     }
     
     /*
@@ -74,19 +119,35 @@ public class Business extends User
     }
     
     //By Tony
-    public boolean createTimeSlot (Date startTime, Date endTime, Employee workingEmployee) 
+    public boolean createTimeSlot (Date startTime, Employee workingEmployee) 
     {
             //Checking the validity of proposed Timeslot.
             /* 
              * 
              * */
         Date currentDate = new Date();
-        if(startTime.after(endTime) || startTime.before(currentDate)) 
+        if(startTime.before(currentDate)) 
         {
             return false;
         }
-        timeslots.add(new Timeslot(startTime));
+        timeslots.add(new Timeslot(startTime, workingEmployee.getID()));
         return true;
+    }
+    
+    //By Josh.
+    public void deleteTimeSlots(Date startTime, Date endTime, Employee workingEmployee)
+    {
+        for(int i = 0; i < timeslots.size(); i++)
+        {
+            if(timeslots.get(i).getEmployeeID() == workingEmployee.getID())
+            {
+                if(timeslots.get(i).getDate().equals(startTime) || (timeslots.get(i).getDate().after(startTime) && timeslots.get(i).getDate().before(endTime)))
+                {
+                    timeslots.remove(i);
+                    i--;
+                }
+            }
+        }
     }
     
     /* Harry Meskell

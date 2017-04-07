@@ -40,6 +40,8 @@ public abstract class Menu
     //Called when we switch to another menu.
     public abstract void onExit();
     
+    public abstract String getBackLocation();
+    
     public GridPane getPane()
     {
         return rootPane;

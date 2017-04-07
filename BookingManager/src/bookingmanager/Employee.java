@@ -20,7 +20,7 @@ public class Employee
 		return name;
 	}
 	
-	public int geteID()
+	public int getID()
 	{
 		return employeeID;
 	}

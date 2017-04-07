@@ -109,9 +109,9 @@ public class LoginMenu extends Menu
         if(!emailField.getText().equals("") && !passwordField.getText().equals(""))
         {
             //Submit to login function
-            if(getManager().getDriver().getLogin().login(emailField.getText(), passwordField.getText()))
+            if(getManager().getDriver().getApp().login(emailField.getText(), passwordField.getText()))
             {
-                if(getManager().getDriver().getLogin().getCurrentUser() instanceof Business)
+                if(getManager().getDriver().getApp().getCurrentUser() instanceof Business)
                 {
                     getManager().switchMenu("BusinessMainMenu");
                 }
@@ -119,7 +119,6 @@ public class LoginMenu extends Menu
                 {
                     getManager().switchMenu("CustomerMainMenu");
                 }
-                errorLabel.setText("Login Success");
             }
             else
             {
@@ -137,7 +136,7 @@ public class LoginMenu extends Menu
     @Override
     public void onEntry()
     {
-        
+        getManager().setBackButtonVisibility(false);
     }
 
     @Override
@@ -146,5 +145,12 @@ public class LoginMenu extends Menu
         errorLabel.setText("");
         emailField.setText("");
         passwordField.setText("");
+        getManager().setBackButtonVisibility(true);
+    }
+    
+    @Override
+    public String getBackLocation()
+    {
+        return "";
     }
 }

@@ -1,4 +1,4 @@
-package saveFile;
+package bookingmanager;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -60,11 +60,12 @@ public class readFile {
 		return businesses;
 	}
 	
-	public boolean readFromFile() {
-		loadCustomers();
-		loadBusiness();
-		
-		return true;
+	public ArrayList<User> readFromFile() {
+      ArrayList<User> jointArray = new ArrayList();
+      jointArray.addAll(loadCustomers());
+      jointArray.addAll(loadBusiness());
+
+		return jointArray;
 	}
 
 }
