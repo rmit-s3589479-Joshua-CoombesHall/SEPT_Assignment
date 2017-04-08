@@ -13,6 +13,7 @@ public class App
         users = new ArrayList();
         reader = new ReadFile();
         users.addAll(reader.readFromFile());
+        //loadTestUsers();
         currentUser = null;
     }
     public boolean login(String email, String password) 

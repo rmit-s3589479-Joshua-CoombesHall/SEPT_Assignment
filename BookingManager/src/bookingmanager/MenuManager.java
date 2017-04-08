@@ -146,10 +146,12 @@ public class MenuManager
             targetMenu = employeeMenu;
         }
         
-        if(targetMenu!=null)
+        if(targetMenu==null)
         {
-            targetMenu.onEntry();
+            System.out.print("Menu reference \"" + a_menuRef + "\"does not exist." );
+            return;
         }
+        targetMenu.onEntry();
         currentMenu.onExit();
         currentMenu = targetMenu;
         

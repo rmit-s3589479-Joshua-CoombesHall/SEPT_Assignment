@@ -58,8 +58,8 @@ public class LoginMenu extends Menu
         content.add(passwordField, 1, 2);
         
         //TEST INPUT
-        emailField.setText("testBusiness@test.com");
-        passwordField.setText("test");
+        emailField.setText("testCustomer@test.com");
+        passwordField.setText("testtest");
         
         Button loginButton = new Button("Login");
         GridPane.setHalignment(loginButton, HPos.RIGHT);
