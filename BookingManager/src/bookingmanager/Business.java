@@ -20,7 +20,6 @@ public class Business extends User
     private int timeSlotLength;
     private Date[] openingTimes;
     private Date[] closingTimes;
-    private int curNextID;
         /*
      * Ruaraidh Leary
      * List of employees for business
@@ -31,7 +30,6 @@ public class Business extends User
     Business(int a_id, String a_email, String a_password, String a_name, String a_address, String a_contactNumber)
     {
         super(a_id, a_email, a_password);
-        curNextID = 0;
         name = a_name;
         address = a_address;
         contactNumber = a_contactNumber;
@@ -100,7 +98,15 @@ public class Business extends User
     
     public int getNextID()
     {
-        return curNextID++;
+        int highestID = 0;
+        for(int e = 0; e < employees.size(); e++)
+        {
+            if(employees.get(e).getID() > highestID)
+            {
+                highestID = employees.get(e).getID();
+            }
+        }
+        return highestID+1;
     }
     
 

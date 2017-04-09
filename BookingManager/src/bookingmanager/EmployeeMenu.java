@@ -310,6 +310,7 @@ public class EmployeeMenu extends Menu
                                         else
                                         {
                                             targetSlot.setId("employeeNotWorkingButton");
+                                            bookedDate.setMinutes(-1);
                                             curBusiness.deleteTimeSlots(bookedDate, bookingEndDate, curEmployee);
                                             System.out.println("Completed removing employee timeslots.");
                                         }
