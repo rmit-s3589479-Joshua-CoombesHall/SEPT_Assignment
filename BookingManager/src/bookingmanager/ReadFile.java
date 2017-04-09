@@ -5,20 +5,20 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
-public class ReadFile {
-	
+public class ReadFile 
+{	
 	private static final Type USER_TYPE = new TypeToken<List<User>>() {}.getType();
 	private static final Type CUSTOMER_TYPE = new TypeToken<List<Customer>>() {}.getType();
 	private static final Type BUSINESS_TYPE = new TypeToken<List<Business>>() {}.getType();
 	
-	public List<Customer> loadCustomers() 
-        {
+	public List<Customer> loadCustomers() {
 		List<Customer> customers = new ArrayList<>();
 		
 		File file = new File("customerDatabase.json");
@@ -38,7 +38,7 @@ public class ReadFile {
                             e.printStackTrace();
                     }
                 }
-		
+
 		return customers;	
 	}
 	
@@ -60,7 +60,7 @@ public class ReadFile {
                             System.out.println(businesses);
                     } catch (FileNotFoundException e) {
                             e.printStackTrace();
-                    }	
+                    }
                 }
 		
 		return businesses;
