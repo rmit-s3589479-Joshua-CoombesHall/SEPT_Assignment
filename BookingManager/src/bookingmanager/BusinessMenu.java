@@ -47,9 +47,10 @@ public class BusinessMenu extends Menu
         GridPane.setHalignment(employeesButton, HPos.CENTER);
         content.add(employeesButton, 0, 1);
         
-        Button viewButton = new Button("View Bookings");
+        //Not currently implemented.
+       /* Button viewButton = new Button("View Bookings");
         GridPane.setHalignment(viewButton, HPos.CENTER);
-        content.add(viewButton, 0, 2);
+        content.add(viewButton, 0, 2);*/
         
         
         employeesButton.setOnAction(new EventHandler<ActionEvent>()
@@ -61,6 +62,7 @@ public class BusinessMenu extends Menu
             }
         });
         
+        /*
         viewButton.setOnAction(new EventHandler<ActionEvent>()
         {
             @Override
@@ -68,7 +70,7 @@ public class BusinessMenu extends Menu
             {
                 getManager().switchMenu("ReviewBookings");
             }
-        });
+        });*/
        
     }
   
