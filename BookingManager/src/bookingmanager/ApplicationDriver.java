@@ -10,7 +10,10 @@ import javafx.stage.Stage;
 
 /**
  * @author joshuahall
- */
+ApplicationDriver
+This class drives the program by starting MenuManager, and by separating the menus
+from the functionality. It also handles saving to file on program quit.
+*/
 //Test (Harry)
 public class ApplicationDriver extends Application
 {
@@ -29,6 +32,7 @@ public class ApplicationDriver extends Application
         launch(args);
     }
     
+    //This saves the current program state to file on exiting.
     @Override
     public void stop()
     {

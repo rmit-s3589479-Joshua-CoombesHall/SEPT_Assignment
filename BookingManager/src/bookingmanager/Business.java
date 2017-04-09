@@ -15,24 +15,27 @@ import java.util.Date;
 public class Business extends User
 {
     private String name;
+    private String ownerFirstName;
+    private String ownerLastName;
     private String address;
     private String contactNumber;
     private int timeSlotLength;
     private Date[] openingTimes;
     private Date[] closingTimes;
-    private int curNextID;
-        /*
+    
+    /*
      * Ruaraidh Leary
      * List of employees for business
      */
     private ArrayList<Employee> employees;
     private ArrayList<Timeslot> timeslots;
     private ArrayList<Appointment> appointments;
-    Business(int a_id, String a_email, String a_password, String a_name, String a_address, String a_contactNumber)
+    Business(int a_id, String a_email, String a_password, String a_name, String a_ownerFirstName, String a_ownerLastName, String a_address, String a_contactNumber)
     {
         super(a_id, a_email, a_password);
-        curNextID = 0;
         name = a_name;
+        ownerFirstName = a_ownerFirstName;
+        ownerLastName = a_ownerLastName;
         address = a_address;
         contactNumber = a_contactNumber;
         employees = new ArrayList<Employee>();
@@ -100,7 +103,15 @@ public class Business extends User
     
     public int getNextID()
     {
-        return curNextID++;
+        int highestID = 0;
+        for(int e = 0; e < employees.size(); e++)
+        {
+            if(employees.get(e).getID() > highestID)
+            {
+                highestID = employees.get(e).getID();
+            }
+        }
+        return highestID+1;
     }
     
 
@@ -112,6 +123,7 @@ public class Business extends User
     /*
      * Ruaraidh Leary
      * Books time slot
+     * NOT IMPLEMENTED.
      */
     public boolean bookTimeSlot(Timeslot slot, Customer customer)
     {

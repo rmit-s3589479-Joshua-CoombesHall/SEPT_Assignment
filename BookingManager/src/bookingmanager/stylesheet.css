@@ -47,6 +47,11 @@ and open the template in the editor.
     -fx-background-color:white;
 }
 
+#employeeButtonDisabled
+{
+    -fx-background-color:transparent;
+}
+
 .errorLabel
 {
     -fx-text-fill: red;

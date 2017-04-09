@@ -62,6 +62,8 @@ public class BookingMenu extends Menu
         businessList = new VBox();
         ScrollPane scrollableBusinessList = new ScrollPane(businessList);
         scrollableBusinessList.setPrefHeight(300);
+        scrollableBusinessList.setPrefWidth(200);
+        scrollableBusinessList.setPadding(new Insets(10));
         businessPanel.add(scrollableBusinessList, 0, 1);
         
         employeeSelector = new GridPane();
@@ -77,8 +79,7 @@ public class BookingMenu extends Menu
         dateSelector.add(dateSelectorHeading, 0, 0);
         dateSelector.setVisible(false);
         */
-        
-        
+
         apptSelectorShell = new GridPane();
         Label apptSelectorHeading = new Label("Please select the appointment you would like:");
         apptSelectorShell.add(apptSelectorHeading, 0, 0);
@@ -88,25 +89,14 @@ public class BookingMenu extends Menu
         apptSelectorShell.add(apptSelector, 0, 1);
         apptSelector.setVisible(false);
         ScrollPane apptSelectorScrollable = new ScrollPane(apptSelector);
-        apptSelectorScrollable.setPrefWidth(300);
+        apptSelectorScrollable.setPrefWidth(500);
         apptSelectorScrollable.setPrefHeight(400);
         content.add(apptSelectorScrollable, 1, 2);
-        /*Button makeBookingButton = new Button("Make Bookings");
-        GridPane.setHalignment(makeBookingButton, HPos.CENTER);
-        content.add(makeBookingButton, 0, 1);
-        
-        makeBookingButton.setOnAction(new EventHandler<ActionEvent>()
-        {
-            @Override
-            public void handle(ActionEvent event)
-            {
-                getManager().switchMenu("MakeBooking");
-            }
-        });*/
-       
     }
+    
+    
   
-    public void updateBusinessList()
+    private void updateBusinessList()
     {
         businessList.getChildren().clear();
         for(int i = 0; i < getManager().getDriver().getApp().getUsers().size(); i++)
@@ -180,7 +170,6 @@ public class BookingMenu extends Menu
                     else
                     {
                         employeeField.setDisable(false);
-                        updateApptTimes();
                     }
                 }
             });
@@ -219,6 +208,12 @@ public class BookingMenu extends Menu
         Date curDate = new Date();
         for(int d = 0; d < 7; d++)
         {
+            //This sets the time to be early so that on days that aren't the current day, any time can be booked.
+            if(d==1)
+            {
+                curDate.setHours(0);
+                curDate.setMinutes(0);
+            }
             ArrayList<Timeslot> todaysSlots = new ArrayList();
             for(int i = 0; i < availableSlots.size(); i++)
             {
@@ -231,24 +226,102 @@ public class BookingMenu extends Menu
                 }
             }
             Collections.sort(todaysSlots, comparing(Timeslot::getDate));
-            Label colHeading = new Label("Day " + d);
-            apptSelector.add(colHeading, d, 0);
+            String colHeading = "";
+            Date today = new Date();
+            today.setDate(today.getDate()+d);
+            Label colHeadingLabel = new Label(getDay(today.getDay()) + " (" + today.getDate() + "/" + (today.getMonth()+1) + ")");
+            apptSelector.add(colHeadingLabel, d+1, 0);
+            
+            //Provides a sidebar with times if we are just looking at an individual employee.
+            //I made a design decision against the sidebar, however I will keep it for now.
+            //populateApptSelectorSidebar();
+            
             int selectedEmployeeID = -1;
             if(!anyEmployeeSelector.isSelected())
             {
                 selectedEmployeeID = selectedBusiness.getEmployees().get(employeeField.getSelectionModel().getSelectedIndex()).getID();
             }
+            int curRow = 1;
             for(int i = 0; i < todaysSlots.size(); i++)
             {
                 if(anyEmployeeSelector.isSelected() || todaysSlots.get(i).getEmployeeID() == selectedEmployeeID)
                 {
-                    //if(todaysSlots.get(i).getEmployeeID() == )
-                    Label thisApptTime = new Label(String.format("%1$tH:%1$tM", todaysSlots.get(i).getDate()));
-                    apptSelector.add(thisApptTime, d, i+1);
+                    Employee curEmployee = null;
+                    for(int e = 0; e < selectedBusiness.getEmployees().size(); e++)
+                    {
+                        if(selectedBusiness.getEmployees().get(e).getID() == todaysSlots.get(i).getEmployeeID())
+                        {
+                            curEmployee = selectedBusiness.getEmployees().get(e);
+                        }
+                    }
+                    Label thisApptTime = new Label(String.format("%1$tH:%1$tM", todaysSlots.get(i).getDate()) + " - " + curEmployee.getName());
+                    apptSelector.add(thisApptTime, d+1, curRow);
+                    curRow++;
                 }
             }
             curDate.setDate(curDate.getDate()+1);
-            
+        }
+    }
+    
+    private void populateApptSelectorSidebar()
+    {
+        if(!anyEmployeeSelector.isSelected())
+        {
+            Date startingTime = new Date();
+            startingTime.setHours(9);
+            startingTime.setMinutes(0);
+
+            Date endingTime = new Date();
+            endingTime.setHours(17);
+            endingTime.setMinutes(1);
+            int row = 0;
+            while(startingTime.before(endingTime))
+            {
+                Label sideLabel = new Label(String.format("%1$tH:%1$tM", startingTime));   
+                apptSelector.add(sideLabel, 0, row+1);
+                startingTime.setMinutes(startingTime.getMinutes()+30);
+                row++;
+            }
+        }
+    }
+    
+    //This converts an int to a day's name in a string, based on the Date.getDay() function.
+    private String getDay(int dateDay)
+    {
+        switch((dateDay)%7)
+        {
+            case 0:
+            {
+                return "Sun";
+            }
+            case 1:
+            {
+                return "Mon";
+            }
+            case 2:
+            {
+                return "Tue";
+            }
+            case 3:
+            {
+                return "Wed";
+            }
+            case 4:
+            {
+                return "Thu";
+            }
+            case 5:
+            {
+                return "Fri";
+            }
+            case 6:
+            {
+                return "Sat";
+            }
+            default:
+            {
+                return "";
+            }
         }
     }
     
