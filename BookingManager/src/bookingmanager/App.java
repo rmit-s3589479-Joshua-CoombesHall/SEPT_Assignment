@@ -56,8 +56,12 @@ public class App
     //Test Data.
     public void loadTestUsers()
     {
-        users.add(new Customer(0, "testCustomer@test.com", "test", "Jim", "Jenson", new Date(), "00000000"));
-        users.add(new Business(0, "testBusiness@test.com", "test", "Globocom", "5 Fake St, Fakesville", "00000000"));
+        users.add(new Customer(0, "testCustomer1@test.com", "test", "Greg", "Gregson", new Date(), "00000000"));
+        users.add(new Customer(0, "testCustomer2@test.com", "test", "Jim", "Jimson", new Date(), "00000000"));
+        users.add(new Customer(0, "testCustomer3@test.com", "test", "Jenny", "Jenson", new Date(), "00000000"));
+        users.add(new Business(0, "testBusiness1@test.com", "test", "Globocom", "Ownerman", "McOwner", "5 Fake St, Fakesville", "00000000"));
+        users.add(new Business(0, "testBusiness2@test.com", "test", "WorldWideAutomation", "Rob", "Otto", "7 Fake St, Fakesville", "00000000"));
+        users.add(new Business(0, "testBusiness3@test.com", "test", "Evilcom", "Snevil", "Manly", "9 Fake St, Fakesville", "00000000"));
     }
 
 
