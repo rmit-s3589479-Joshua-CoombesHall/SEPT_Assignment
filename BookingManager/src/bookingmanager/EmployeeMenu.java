@@ -227,11 +227,6 @@ public class EmployeeMenu extends Menu
                     bookingEndDate.setDate(bookingEndDate.getDate()+i);
                     bookedDate.setSeconds(0);
                     bookingEndDate.setSeconds(0);
-                    if(i==1)
-                    {
-                     //hold up.
-                        int g = 1;
-                    }
                     if(x == 0)
                     {
                         bookedDate.setHours(openingTime.getHours());
@@ -255,6 +250,10 @@ public class EmployeeMenu extends Menu
                             calender[i][x].setId("employeeWorkingButton");
                             break;
                         }
+                    }
+                    if(bookedDate.before(new Date()))
+                    {
+                        calender[i][x].setDisable(true);
                     }
                 }
                 calender[i][x].setOnAction(new EventHandler<ActionEvent>()
@@ -301,7 +300,6 @@ public class EmployeeMenu extends Menu
                                             targetSlot.setId("employeeWorkingButton");
                                             while(bookedDate.before(bookingEndDate))
                                             {
-                                                
                                                 curBusiness.createTimeSlot((Date)bookedDate.clone(), curEmployee);
                                                 bookedDate.setMinutes(bookedDate.getMinutes()+curBusiness.getTimeSlotLength());
                                             }

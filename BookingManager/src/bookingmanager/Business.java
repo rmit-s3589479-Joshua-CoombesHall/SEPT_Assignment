@@ -22,7 +22,8 @@ public class Business extends User
     private int timeSlotLength;
     private Date[] openingTimes;
     private Date[] closingTimes;
-        /*
+    
+    /*
      * Ruaraidh Leary
      * List of employees for business
      */
@@ -122,6 +123,7 @@ public class Business extends User
     /*
      * Ruaraidh Leary
      * Books time slot
+     * NOT IMPLEMENTED.
      */
     public boolean bookTimeSlot(Timeslot slot, Customer customer)
     {

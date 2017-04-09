@@ -8,9 +8,11 @@ public class Timeslot
 {
 	private Date apptDate;
 	private int employeeID;
+        private Appointment appt;
 	Timeslot(Date a_apptDate, int a_employeeID) {
 		apptDate = a_apptDate;
 		employeeID = a_employeeID;
+                appt = null;
 	}
 
 	public Date getDate() {
@@ -20,6 +22,11 @@ public class Timeslot
 	public int getEmployeeID() {
 		return employeeID;
 	}
+        
+        public void setAppointment(Appointment a_appt)
+        {
+            appt = a_appt;
+        }
         
         public boolean equals(Timeslot comparing)
         {

@@ -204,12 +204,12 @@ public class RegistrationMenu extends Menu
         boolean lengthsValid = true;		
         if(firstNameField.getText().length() > FIRST_NAME_MAX_LEN)		
         {		
-            errorLabel.setText("First name is too long. ("+ FIRST_NAME_MAX_LEN + " Characters)");		
+            errorLabel.setText("First name is too long. ("+ FIRST_NAME_MAX_LEN + " characters)");		
             lengthsValid = false;		
         }		
         else if(lastNameField.getText().length() > LAST_NAME_MAX_LEN)		
         {		
-            errorLabel.setText("Last name is too long. ("+ LAST_NAME_MAX_LEN + " Characters)");		
+            errorLabel.setText("Last name is too long. ("+ LAST_NAME_MAX_LEN + " characters)");		
             lengthsValid = false;		
         }		
         else if(contactNumberField.getText().length() != PHONE_NUMBER_LEN)		
@@ -219,7 +219,7 @@ public class RegistrationMenu extends Menu
         }		
         else if(passwordField1.getText().length() < PASSWORD_MIN_LEN || passwordField1.getText().length() > PASSWORD_MAX_LEN)		
         {		
-            errorLabel.setText("Password is not a valid length. (" + PASSWORD_MIN_LEN + "-" + PASSWORD_MAX_LEN + " Characters.");		
+            errorLabel.setText("Password is not a valid length. (" + PASSWORD_MIN_LEN + "-" + PASSWORD_MAX_LEN + " characters)");		
             lengthsValid = false;		
         }		
         else if(dobField.getValue().isAfter(LocalDate.now()))		

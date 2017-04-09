@@ -3,6 +3,11 @@ package bookingmanager;
 import java.util.ArrayList;
 import java.util.Date;
 
+/*
+App
+This class is the heart of the program which manages all of the users, and is the main channel that connects
+the menus to the functionality.
+*/
 public class App 
 {	
     private ArrayList<User> users;
@@ -12,17 +17,22 @@ public class App
     {
         users = new ArrayList();
         reader = new ReadFile();
+        //Loads the users from file.
         users.addAll(reader.readFromFile());
-        //loadTestUsers();
+        //If there was no file to load, loads the test data.
+        if(users.size() == 0)
+        {
+            loadTestUsers();
+        }
         currentUser = null;
     }
+    //Logs the user in.
     public boolean login(String email, String password) 
     {
         for(int i = 0; i < users.size(); i++) 
         {
             if(email.equals(users.get(i).getEmail())) 
             {
-                System.out.println("User Found");
                 if(password.equals(users.get(i).getPassword())) 
                 {
                     currentUser = users.get(i);
@@ -30,7 +40,6 @@ public class App
                 } 
                 else 
                 {
-                    System.out.println("Password Invalid");
                     return false;
                 }
             }
@@ -47,7 +56,8 @@ public class App
     {
         return users;
     }
-
+    
+    //Gets the user who is currently logged in.
     public User getCurrentUser()
     {
         return currentUser;

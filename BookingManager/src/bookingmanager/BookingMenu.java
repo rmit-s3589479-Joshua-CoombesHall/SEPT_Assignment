@@ -79,8 +79,7 @@ public class BookingMenu extends Menu
         dateSelector.add(dateSelectorHeading, 0, 0);
         dateSelector.setVisible(false);
         */
-        
-        
+
         apptSelectorShell = new GridPane();
         Label apptSelectorHeading = new Label("Please select the appointment you would like:");
         apptSelectorShell.add(apptSelectorHeading, 0, 0);
@@ -93,22 +92,11 @@ public class BookingMenu extends Menu
         apptSelectorScrollable.setPrefWidth(500);
         apptSelectorScrollable.setPrefHeight(400);
         content.add(apptSelectorScrollable, 1, 2);
-        /*Button makeBookingButton = new Button("Make Bookings");
-        GridPane.setHalignment(makeBookingButton, HPos.CENTER);
-        content.add(makeBookingButton, 0, 1);
-        
-        makeBookingButton.setOnAction(new EventHandler<ActionEvent>()
-        {
-            @Override
-            public void handle(ActionEvent event)
-            {
-                getManager().switchMenu("MakeBooking");
-            }
-        });*/
-       
     }
+    
+    
   
-    public void updateBusinessList()
+    private void updateBusinessList()
     {
         businessList.getChildren().clear();
         for(int i = 0; i < getManager().getDriver().getApp().getUsers().size(); i++)
@@ -240,67 +228,13 @@ public class BookingMenu extends Menu
             Collections.sort(todaysSlots, comparing(Timeslot::getDate));
             String colHeading = "";
             Date today = new Date();
-            switch((today.getDay()+d)%7)
-            {
-                case 0:
-                {
-                    colHeading += "Sun";
-                    break;
-                }
-                case 1:
-                {
-                    colHeading += "Mon";
-                    break;
-                }
-                case 2:
-                {
-                    colHeading += "Tue";
-                    break;
-                }
-                case 3:
-                {
-                    colHeading += "Wed";
-                    break;
-                }
-                case 4:
-                {
-                    colHeading += "Thu";
-                    break;
-                }
-                case 5:
-                {
-                    colHeading += "Fri";
-                    break;
-                }
-                case 6:
-                {
-                    colHeading += "Sat";
-                    break;
-                }
-            }
             today.setDate(today.getDate()+d);
-            Label colHeadingLabel = new Label(colHeading + " (" + today.getDate() + "/" + (today.getMonth()+1) + ")");
+            Label colHeadingLabel = new Label(getDay(today.getDay()) + " (" + today.getDate() + "/" + (today.getMonth()+1) + ")");
             apptSelector.add(colHeadingLabel, d+1, 0);
             
             //Provides a sidebar with times if we are just looking at an individual employee.
-            if(!anyEmployeeSelector.isSelected())
-            {
-                Date startingTime = new Date();
-                startingTime.setHours(9);
-                startingTime.setMinutes(0);
-
-                Date endingTime = new Date();
-                endingTime.setHours(17);
-                endingTime.setMinutes(1);
-                int row = 0;
-                while(startingTime.before(endingTime))
-                {
-                    Label sideLabel = new Label(String.format("%1$tH:%1$tM", startingTime));   
-                    apptSelector.add(sideLabel, 0, row+1);
-                    startingTime.setMinutes(startingTime.getMinutes()+30);
-                    row++;
-                }
-            }
+            //I made a design decision against the sidebar, however I will keep it for now.
+            //populateApptSelectorSidebar();
             
             int selectedEmployeeID = -1;
             if(!anyEmployeeSelector.isSelected())
@@ -326,7 +260,68 @@ public class BookingMenu extends Menu
                 }
             }
             curDate.setDate(curDate.getDate()+1);
-            
+        }
+    }
+    
+    private void populateApptSelectorSidebar()
+    {
+        if(!anyEmployeeSelector.isSelected())
+        {
+            Date startingTime = new Date();
+            startingTime.setHours(9);
+            startingTime.setMinutes(0);
+
+            Date endingTime = new Date();
+            endingTime.setHours(17);
+            endingTime.setMinutes(1);
+            int row = 0;
+            while(startingTime.before(endingTime))
+            {
+                Label sideLabel = new Label(String.format("%1$tH:%1$tM", startingTime));   
+                apptSelector.add(sideLabel, 0, row+1);
+                startingTime.setMinutes(startingTime.getMinutes()+30);
+                row++;
+            }
+        }
+    }
+    
+    //This converts an int to a day's name in a string, based on the Date.getDay() function.
+    private String getDay(int dateDay)
+    {
+        switch((dateDay)%7)
+        {
+            case 0:
+            {
+                return "Sun";
+            }
+            case 1:
+            {
+                return "Mon";
+            }
+            case 2:
+            {
+                return "Tue";
+            }
+            case 3:
+            {
+                return "Wed";
+            }
+            case 4:
+            {
+                return "Thu";
+            }
+            case 5:
+            {
+                return "Fri";
+            }
+            case 6:
+            {
+                return "Sat";
+            }
+            default:
+            {
+                return "";
+            }
         }
     }
     
