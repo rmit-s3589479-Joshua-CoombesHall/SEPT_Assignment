@@ -1,0 +1,66 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Mar 20, 2017, 4:55:24 PM
+    Author     : joshuahall
+*/
+
+#background
+{
+    -fx-background-color: #c9ddff;
+}
+
+#root
+{
+    -fx-padding: 5px;
+    -fx-background-color: #c4e6fc;
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+}
+
+#loginMenuButtonBar
+{
+    -fx-alignment: CENTER;
+}
+
+#header
+{
+    -fx-padding: 5px;
+}
+
+#heading
+{
+    -fx-font-size: 32;
+}
+
+#employeeNotWorkingButton
+{
+    -fx-background-color:black;
+}
+
+#employeeWorkingButton
+{
+    -fx-background-color:white;
+}
+
+#employeeButtonDisabled
+{
+    -fx-background-color:transparent;
+}
+
+.errorLabel
+{
+    -fx-text-fill: red;
+}
+
+.businessRecord
+{
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-border-radius: 2px;
+}
+
