@@ -30,7 +30,10 @@ public class EmployeeMenu extends Menu
     Date closingTime = new Date();
     
     GridPane calenderPane;
-    TextField addEmployeeNameField;
+    TextField addEmployeeFirstNameField;
+    TextField addEmployeeLastNameField;
+    TextField addEmployeeContactField;
+    TextField addEmployeeEmailField;
     TextField timeSlotLengthField;
     Business currentBusiness;
     VBox employeeListPane;
@@ -75,22 +78,37 @@ public class EmployeeMenu extends Menu
         employeePane.add(addEmployeePane, 0, 1);
         Label addEmployeeHeading = new Label("Add Employee");
         addEmployeePane.add(addEmployeeHeading, 0, 0);
-        addEmployeeNameField = new TextField();
-        addEmployeeNameField.setPromptText("Employee Name");
-        addEmployeePane.add(addEmployeeNameField, 0, 1);
+        addEmployeeFirstNameField = new TextField();
+        addEmployeeFirstNameField.setPromptText("Employee First Name");
+        addEmployeePane.add(addEmployeeFirstNameField, 0, 1);
+        addEmployeeLastNameField = new TextField();
+        addEmployeeLastNameField.setPromptText("Employee Last Name");
+        addEmployeePane.add(addEmployeeLastNameField, 0, 2);
+        addEmployeeContactField = new TextField();
+        addEmployeeContactField.setPromptText("Employee Contact Number");
+        addEmployeePane.add(addEmployeeContactField, 0, 3);
+        addEmployeeEmailField = new TextField();
+        addEmployeeEmailField.setPromptText("Employee Email");
+        addEmployeePane.add(addEmployeeEmailField, 0, 4);
         
-        Button addEmployeeButton = new Button("Add");
-        addEmployeePane.add(addEmployeeButton, 1, 1);
+        Button addEmployeeButton = new Button("Add Employee");
+        addEmployeePane.add(addEmployeeButton, 0, 5);
         addEmployeeButton.setOnAction(new EventHandler<ActionEvent>()
         {
             @Override
             public void handle(ActionEvent event)
             {
                 //Validate employee field and add them to the business.
-                if(!addEmployeeNameField.getText().equals(""))
+                if(!addEmployeeFirstNameField.getText().equals("") &&
+                    !addEmployeeLastNameField.getText().equals("") &&
+                    !addEmployeeContactField.getText().equals("") &&
+                    !addEmployeeEmailField.getText().equals(""))
                 {
-                    currentBusiness.addEmployee(addEmployeeNameField.getText());
-                    addEmployeeNameField.setText("");
+                    currentBusiness.addEmployee(addEmployeeFirstNameField.getText(), addEmployeeLastNameField.getText(), addEmployeeContactField.getText(), addEmployeeEmailField.getText());
+                    addEmployeeFirstNameField.setText("");
+                    addEmployeeLastNameField.setText("");
+                    addEmployeeContactField.setText("");
+                    addEmployeeEmailField.setText("");
                     updateEmployeeList();
                 }
             }
@@ -98,13 +116,14 @@ public class EmployeeMenu extends Menu
         
         
         calenderPane = new GridPane();
+        calenderPane.setHgap(10);
         innerContent.getChildren().add(calenderPane);
         
         GridPane settingsPane = new GridPane();
         content.add(settingsPane, 0, 2);
         
-        Label settingsHeading = new Label("Business Settings");
-        settingsPane.add(settingsHeading, 0, 0);
+        //Label settingsHeading = new Label("Business Settings");
+        //settingsPane.add(settingsHeading, 0, 0);
         /*
         Label timeSlotLengthLabel = new Label("Time Slot Length: ");
         settingsPane.add(timeSlotLengthLabel, 0, 1);
@@ -303,14 +322,12 @@ public class EmployeeMenu extends Menu
                                                 curBusiness.createTimeSlot((Date)bookedDate.clone(), curEmployee);
                                                 bookedDate.setMinutes(bookedDate.getMinutes()+curBusiness.getTimeSlotLength());
                                             }
-                                            System.out.println("Completed adding employee timeslots.");
                                         }
                                         else
                                         {
                                             targetSlot.setId("employeeNotWorkingButton");
                                             bookedDate.setMinutes(-1);
                                             curBusiness.deleteTimeSlots(bookedDate, bookingEndDate, curEmployee);
-                                            System.out.println("Completed removing employee timeslots.");
                                         }
                                     }
                                 }
@@ -331,7 +348,7 @@ public class EmployeeMenu extends Menu
         employeeListPane.getChildren().clear();
         for(int i = 0; i < getEmployeeList().size(); i++)
         {
-            Button thisEmployeeButton = new Button(getEmployeeList().get(i).getName());
+            Button thisEmployeeButton = new Button(getEmployeeList().get(i).getFirstName());
             employeeListPane.getChildren().add(thisEmployeeButton);
             thisEmployeeButton.setOnAction(new EventHandler<ActionEvent>()
             {

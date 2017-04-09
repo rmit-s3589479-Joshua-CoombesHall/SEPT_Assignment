@@ -96,9 +96,9 @@ public class Business extends User
      * Ruaraidh Leary
      * Adds employee to business' list of employees
      */
-    public void addEmployee(String name)
+    public void addEmployee(String firstName, String lastName, String contactNumber, String email)
     {
-    	employees.add(new Employee(name, getNextID()));
+    	employees.add(new Employee(firstName, lastName, contactNumber, email, getNextID()));
     }
     
     public int getNextID()

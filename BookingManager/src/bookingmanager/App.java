@@ -20,7 +20,7 @@ public class App
         //Loads the users from file.
         users.addAll(reader.readFromFile());
         //If there was no file to load, loads the test data.
-        if(users.size() == 0)
+        if(users.isEmpty())
         {
             loadTestUsers();
         }

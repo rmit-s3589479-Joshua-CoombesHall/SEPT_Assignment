@@ -142,7 +142,7 @@ public class BookingMenu extends Menu
         ObservableList<String> options = FXCollections.observableArrayList();
         for(int i = 0; i < selectedBusiness.getEmployees().size(); i++)
         {
-            options.add(selectedBusiness.getEmployees().get(i).getName());
+            options.add(selectedBusiness.getEmployees().get(i).getFirstName());
         }
         
         employeeField = new ComboBox(options);
@@ -254,7 +254,7 @@ public class BookingMenu extends Menu
                             curEmployee = selectedBusiness.getEmployees().get(e);
                         }
                     }
-                    Label thisApptTime = new Label(String.format("%1$tH:%1$tM", todaysSlots.get(i).getDate()) + " - " + curEmployee.getName());
+                    Label thisApptTime = new Label(String.format("%1$tH:%1$tM", todaysSlots.get(i).getDate()) + " - " + curEmployee.getFirstName());
                     apptSelector.add(thisApptTime, d+1, curRow);
                     curRow++;
                 }
